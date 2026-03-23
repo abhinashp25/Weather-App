@@ -1,0 +1,93 @@
+.loading-screen {
+  position: fixed;
+  inset: 0;
+  z-index: 10000;
+  background: #0a0e1a;
+  animation: fadeOut 0.6s ease-out 2.2s forwards;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+}
+
+@keyframes fadeOut {
+  from { opacity: 1; }
+  to { opacity: 0; }
+}
+
+.loading-canvas {
+  position: fixed;
+  inset: 0;
+  display: block;
+}
+
+.loading-content {
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  z-index: 11;
+  pointer-events: none;
+}
+
+.loading-text {
+  text-align: center;
+  margin-bottom: 25px;
+}
+
+.loading-title {
+  font-family: 'Outfit', sans-serif;
+  font-size: 2rem;
+  font-weight: 800;
+  margin: 0 0 2px;
+  background: linear-gradient(135deg, #6366f1, #06b6d4);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  animation: fadeIn 0.5s ease-out 0.1s both;
+}
+
+.loading-subtitle {
+  font-family: 'Outfit', sans-serif;
+  font-size: 0.9rem;
+  font-weight: 300;
+  color: rgba(150, 180, 255, 0.7);
+  margin: 0;
+  animation: fadeIn 0.5s ease-out 0.2s both;
+}
+
+.loading-progress {
+  width: 140px;
+  height: 2px;
+  background: rgba(255, 255, 255, 0.12);
+  margin: 15px auto;
+  border-radius: 1px;
+  overflow: hidden;
+  animation: fadeIn 0.5s ease-out 0.3s both;
+}
+
+.loading-bar {
+  height: 100%;
+  background: linear-gradient(90deg, #6366f1, #06b6d4);
+  animation: barFill 2s ease-in-out infinite;
+  box-shadow: 0 0 6px #6366f1;
+}
+
+@keyframes barFill {
+  0% { width: 10%; }
+  50% { width: 85%; }
+  100% { width: 85%; }
+}
+
+.loading-status {
+  font-size: 0.8rem;
+  color: rgba(180, 200, 220, 0.6);
+  margin: 15px 0 0;
+  letter-spacing: 0.02em;
+  animation: fadeIn 0.5s ease-out 0.4s both;
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}

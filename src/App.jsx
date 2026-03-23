@@ -1,5 +1,5 @@
 import React from 'react';
-import { WeatherProvider } from './WeatherContext';
+import { WeatherProvider, useWeather } from './WeatherContext';
 import { I18nProvider, useI18n } from './I18nContext';
 import SatelliteBackground from './components/SatelliteBackground';
 import WebGLWeatherEffects from './components/WebGLWeatherEffects';
@@ -10,13 +10,18 @@ import AIAdvisor from './components/AIAdvisor';
 import TimeTravelModule from './components/TimeTravelModule';
 import WeatherMap from './components/WeatherMap';
 import LanguageSwitcher from './components/LanguageSwitcher';
+import LoadingScreen from './components/LoadingScreen';
 import './App.css';
 
 function AppContent() {
   const { t } = useI18n();
+  const { loading } = useWeather();
 
   return (
     <>
+      {/* Loading Animation */}
+      {loading && <LoadingScreen />}
+
       {/* Background layers */}
       <SatelliteBackground />
       <WebGLWeatherEffects />

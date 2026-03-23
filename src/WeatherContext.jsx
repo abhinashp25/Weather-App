@@ -5,6 +5,7 @@ const WeatherContext = createContext(null);
 const API_KEY = import.meta.env.VITE_OPENWEATHER_API_KEY;
 const BASE = 'https://api.openweathermap.org/data/2.5';
 const GEO = 'https://api.openweathermap.org/geo/1.0';
+const REFRESH_INTERVAL_MS = 2 * 60 * 1000;
 
 export function WeatherProvider({ children }) {
   const [location, setLocation] = useState({ name: 'New Delhi', lat: 28.6139, lon: 77.2090, country: 'IN' });
@@ -15,9 +16,13 @@ export function WeatherProvider({ children }) {
   const [error, setError] = useState(null);
   const [unit, setUnit] = useState('metric'); // metric | imperial
 
-  const fetchWeather = useCallback(async (lat, lon) => {
-    setLoading(true);
-    setError(null);
+  const fetchWeather = useCallback(async (lat, lon, options = {}) => {
+    const { silent = false } = options;
+    if (!silent) {
+      setLoading(true);
+      setError(null);
+    }
+
     try {
       const [currentRes, forecastRes, aqRes] = await Promise.all([
         fetch(`${BASE}/weather?lat=${lat}&lon=${lon}&units=${unit}&appid=${API_KEY}`),
@@ -37,9 +42,9 @@ export function WeatherProvider({ children }) {
       setForecast(forecastData);
       setAirQuality(aqData);
     } catch (err) {
-      setError(err.message);
+      if (!silent) setError(err.message);
     } finally {
-      setLoading(false);
+      if (!silent) setLoading(false);
     }
   }, [unit]);
 
@@ -68,9 +73,15 @@ export function WeatherProvider({ children }) {
     setUnit(prev => prev === 'metric' ? 'imperial' : 'metric');
   }, []);
 
+  const setUnitMode = useCallback((nextUnit) => {
+    if (nextUnit === 'metric' || nextUnit === 'imperial') {
+      setUnit(nextUnit);
+    }
+  }, []);
+
   useEffect(() => {
     fetchWeather(location.lat, location.lon);
-  }, [unit]);
+  }, [unit, location.lat, location.lon, fetchWeather]);
 
   useEffect(() => {
     // Try geolocation on mount
@@ -99,11 +110,30 @@ export function WeatherProvider({ children }) {
     }
   }, []);
 
+  useEffect(() => {
+    const intervalId = window.setInterval(() => {
+      fetchWeather(location.lat, location.lon, { silent: true });
+    }, REFRESH_INTERVAL_MS);
+
+    const onVisibilityChange = () => {
+      if (document.visibilityState === 'visible') {
+        fetchWeather(location.lat, location.lon, { silent: true });
+      }
+    };
+
+    document.addEventListener('visibilitychange', onVisibilityChange);
+
+    return () => {
+      window.clearInterval(intervalId);
+      document.removeEventListener('visibilitychange', onVisibilityChange);
+    };
+  }, [location.lat, location.lon, fetchWeather]);
+
   return (
     <WeatherContext.Provider value={{
       location, current, forecast, airQuality,
       loading, error, unit,
-      searchLocation, changeLocation, toggleUnit
+      searchLocation, changeLocation, toggleUnit, setUnitMode
     }}>
       {children}
     </WeatherContext.Provider>

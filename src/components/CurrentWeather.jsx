@@ -19,7 +19,7 @@ function formatTime(ts, tz) {
 }
 
 export default function CurrentWeather() {
-  const { current, location, unit, toggleUnit, loading } = useWeather();
+  const { current, location, unit, setUnitMode, loading } = useWeather();
   const { t } = useI18n();
 
   if (loading || !current) {
@@ -43,6 +43,12 @@ export default function CurrentWeather() {
   const IconComponent = WEATHER_ICONS[mainWeather] || Cloud;
   const unitSymbol = unit === 'metric' ? '°C' : '°F';
   const windUnit = unit === 'metric' ? 'm/s' : 'mph';
+  const windValue = unit === 'metric'
+    ? `${current.wind.speed.toFixed(1)} ${windUnit}`
+    : `${Math.round(current.wind.speed)} ${windUnit}`;
+  const visibilityValue = unit === 'metric'
+    ? `${(current.visibility / 1000).toFixed(1)} km`
+    : `${(current.visibility / 1609.34).toFixed(1)} mi`;
 
   return (
     <div className="current-weather glass-panel animate-fade-in-up">
@@ -51,9 +57,24 @@ export default function CurrentWeather() {
           <h2>{location.name}</h2>
           <span className="cw-country">{location.country}</span>
         </div>
-        <button className="cw-unit-toggle glass-panel-static" onClick={toggleUnit} id="unit-toggle-btn">
-          {unit === 'metric' ? '°C' : '°F'}
-        </button>
+        <div className="cw-unit-toggle glass-panel-static" id="unit-toggle-btn" role="group" aria-label="Temperature unit toggle">
+          <button
+            type="button"
+            className={`cw-unit-btn ${unit === 'metric' ? 'active' : ''}`}
+            onClick={() => setUnitMode('metric')}
+            aria-pressed={unit === 'metric'}
+          >
+            °C
+          </button>
+          <button
+            type="button"
+            className={`cw-unit-btn ${unit === 'imperial' ? 'active' : ''}`}
+            onClick={() => setUnitMode('imperial')}
+            aria-pressed={unit === 'imperial'}
+          >
+            °F
+          </button>
+        </div>
       </div>
 
       <div className="cw-main">
@@ -73,8 +94,8 @@ export default function CurrentWeather() {
       <div className="cw-details">
         <DetailCard icon={<Thermometer size={18} />} label={t('feelsLike')} value={`${feelsLike}${unitSymbol}`} />
         <DetailCard icon={<Droplets size={18} />} label={t('humidity')} value={`${current.main.humidity}%`} />
-        <DetailCard icon={<Wind size={18} />} label={t('wind')} value={`${current.wind.speed} ${windUnit}`} />
-        <DetailCard icon={<Eye size={18} />} label={t('visibility')} value={`${(current.visibility / 1000).toFixed(1)} km`} />
+        <DetailCard icon={<Wind size={18} />} label={t('wind')} value={windValue} />
+        <DetailCard icon={<Eye size={18} />} label={t('visibility')} value={visibilityValue} />
         <DetailCard icon={<Gauge size={18} />} label={t('pressure')} value={`${current.main.pressure} hPa`} />
         <DetailCard icon={<Sunrise size={18} />} label={t('sunrise')} value={formatTime(current.sys.sunrise, current.timezone)} />
       </div>
