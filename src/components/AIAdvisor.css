@@ -17,6 +17,13 @@
   letter-spacing: 0.06em;
 }
 
+.ai-subtitle {
+  margin: 0 0 var(--space-md);
+  color: var(--text-tertiary);
+  font-size: 0.76rem;
+  line-height: 1.35;
+}
+
 .ai-aqi-badge {
   font-size: 0.72rem;
   font-weight: 700;

@@ -20,6 +20,7 @@ export default function AIAdvisor() {
     const humidity = current.main.humidity;
     const visibility = current.visibility;
     const aqi = airQuality?.list?.[0]?.main?.aqi || 1;
+    const strongWindThreshold = unit === 'metric' ? 11 : 24;
 
     const tips = [];
 
@@ -40,10 +41,19 @@ export default function AIAdvisor() {
       tips.push({ icon: <Umbrella size={16} />, text: t('tipUmbrella'), cat: 'travel' });
     }
 
-    if (visibility < 2000) {
+    if (weather === 'Thunderstorm') {
+      tips.push({ icon: <AlertTriangle size={16} />, text: t('tipThunderstorm'), cat: 'travel' });
+    }
+
+    if (weather === 'Snow') {
+      tips.push({ icon: <Car size={16} />, text: t('tipSnowRoad'), cat: 'commute' });
+    }
+
+    if (visibility < 3000) {
       tips.push({ icon: <Car size={16} />, text: t('tipLowVis'), cat: 'commute' });
     }
-    if (wind > 15) {
+
+    if (wind > strongWindThreshold) {
       tips.push({ icon: <Wind size={16} />, text: t('tipStrongWind'), cat: 'commute' });
     } else if (weather === 'Clear' && temp > 15 && temp < 30) {
       tips.push({ icon: <Bike size={16} />, text: t('tipPerfectCycling'), cat: 'commute' });
@@ -63,10 +73,22 @@ export default function AIAdvisor() {
       tips.push({ icon: <Smile size={16} />, text: t('tipSunscreen'), cat: 'health' });
     }
 
+    if (humidity > 85 && temp > (unit === 'metric' ? 24 : 75)) {
+      tips.push({ icon: <Frown size={16} />, text: t('tipHighHumidity'), cat: 'health' });
+    }
+
+    if (humidity < 25) {
+      tips.push({ icon: <Smile size={16} />, text: t('tipDryAirHydrate'), cat: 'health' });
+    }
+
+    if (tips.length === 0) {
+      tips.push({ icon: <Meh size={16} />, text: t('tipGeneralBalanced'), cat: 'activity' });
+    }
+
     return tips;
   }, [current, airQuality, unit, t]);
 
-  const aqi = airQuality?.list?.[0]?.main?.aqi || 1;
+  const aqi = Math.min(5, Math.max(1, airQuality?.list?.[0]?.main?.aqi || 1));
 
   if (!current) return null;
 
@@ -78,6 +100,8 @@ export default function AIAdvisor() {
           AQI: {AQI_LABELS[aqi - 1]}
         </div>
       </div>
+
+      <p className="ai-subtitle">{t('aiSubtitle')}</p>
 
       <div className="ai-insights">
         {insights.map((tip, i) => (

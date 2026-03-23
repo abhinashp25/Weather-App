@@ -34,6 +34,76 @@
   border: 1px solid rgba(255,255,255,0.06);
 }
 
+.wm-right-controls {
+  display: flex;
+  align-items: center;
+  gap: var(--space-sm);
+}
+
+.wm-zoom-controls {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.wm-icon-btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 28px;
+  height: 28px;
+  border-radius: var(--radius-sm);
+  border: 1px solid rgba(255,255,255,0.12);
+  background: rgba(255,255,255,0.06);
+  color: var(--text-secondary);
+  cursor: pointer;
+  transition: all var(--transition-fast);
+  text-decoration: none;
+}
+
+.wm-icon-btn:hover {
+  background: rgba(255,255,255,0.12);
+  color: var(--text-primary);
+}
+
+.wm-zoom-value {
+  min-width: 1.2rem;
+  text-align: center;
+  color: var(--text-secondary);
+  font-size: 0.78rem;
+  font-weight: 600;
+}
+
+.wm-layer-tabs {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin-bottom: var(--space-md);
+}
+
+.wm-layer-tab {
+  border: 1px solid rgba(255,255,255,0.12);
+  background: rgba(255,255,255,0.04);
+  color: var(--text-tertiary);
+  border-radius: var(--radius-full);
+  padding: 5px 10px;
+  font-size: 0.72rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all var(--transition-fast);
+}
+
+.wm-layer-tab:hover {
+  color: var(--text-secondary);
+  background: rgba(255,255,255,0.08);
+}
+
+.wm-layer-tab.active {
+  color: var(--text-primary);
+  border-color: rgba(99,102,241,0.45);
+  background: rgba(99,102,241,0.2);
+}
+
 .wm-frame-container {
   border-radius: var(--radius-md);
   overflow: hidden;
@@ -47,4 +117,11 @@
   height: 100%;
   border: none;
   border-radius: var(--radius-md);
+}
+
+@media (max-width: 800px) {
+  .wm-right-controls {
+    width: 100%;
+    justify-content: space-between;
+  }
 }
