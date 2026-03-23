@@ -1,0 +1,135 @@
+.time-travel {
+  padding: var(--space-xl);
+}
+
+.tt-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: var(--space-sm);
+  flex-wrap: wrap;
+  gap: var(--space-sm);
+}
+
+.tt-title {
+  font-size: 0.85rem;
+  font-weight: 600;
+  color: var(--text-secondary);
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  display: flex;
+  align-items: center;
+  gap: var(--space-sm);
+}
+
+.tt-tabs {
+  display: flex;
+  gap: 2px;
+  background: rgba(255,255,255,0.04);
+  border-radius: var(--radius-full);
+  padding: 2px;
+}
+
+.tt-tab {
+  padding: 4px 14px;
+  border: none;
+  background: none;
+  color: var(--text-tertiary);
+  font-family: var(--font-display);
+  font-size: 0.75rem;
+  font-weight: 600;
+  border-radius: var(--radius-full);
+  cursor: pointer;
+  transition: all var(--transition-fast);
+}
+
+.tt-tab:hover { color: var(--text-secondary); }
+
+.tt-tab.active {
+  background: var(--accent-primary);
+  color: #fff;
+}
+
+.tt-subtitle {
+  font-size: 0.8rem;
+  color: var(--text-tertiary);
+  margin-bottom: var(--space-lg);
+}
+
+.tt-subtitle strong {
+  color: var(--text-accent);
+}
+
+/* Comparison Layout */
+.tt-comparison {
+  display: grid;
+  grid-template-columns: 1fr auto 1fr;
+  gap: var(--space-md);
+  align-items: center;
+}
+
+.tt-col {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: var(--space-xs);
+  padding: var(--space-md);
+  background: rgba(255,255,255,0.03);
+  border-radius: var(--radius-md);
+  border: 1px solid rgba(255,255,255,0.05);
+}
+
+.tt-col-label {
+  font-size: 0.72rem;
+  color: var(--text-tertiary);
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  font-weight: 600;
+}
+
+.tt-col-value {
+  font-family: var(--font-display);
+  font-size: 1.8rem;
+  font-weight: 700;
+  color: var(--text-primary);
+}
+
+.tt-col-sub {
+  font-size: 0.75rem;
+  color: var(--text-tertiary);
+}
+
+.tt-diff-col {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.tt-diff-badge {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  padding: 6px 12px;
+  border-radius: var(--radius-full);
+  font-family: var(--font-display);
+  font-size: 0.82rem;
+  font-weight: 700;
+  background: rgba(255,255,255,0.06);
+  border: 1px solid rgba(255,255,255,0.1);
+}
+
+.diff-up { color: var(--accent-danger); }
+.diff-down { color: var(--accent-cool); }
+.diff-neutral { color: var(--text-tertiary); }
+
+/* Climate Insight */
+.tt-insight {
+  margin-top: var(--space-lg);
+  padding: var(--space-md);
+  background: rgba(99,102,241,0.06);
+  border: 1px solid rgba(99,102,241,0.12);
+  border-radius: var(--radius-md);
+  font-size: 0.82rem;
+  color: var(--text-secondary);
+  line-height: 1.5;
+}

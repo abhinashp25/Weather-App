@@ -1,0 +1,72 @@
+.ai-advisor {
+  padding: var(--space-xl);
+}
+
+.ai-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: var(--space-md);
+}
+
+.ai-title {
+  font-size: 0.85rem;
+  font-weight: 600;
+  color: var(--text-secondary);
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+}
+
+.ai-aqi-badge {
+  font-size: 0.72rem;
+  font-weight: 700;
+  padding: 3px 10px;
+  border-radius: var(--radius-full);
+  border: 1px solid;
+  letter-spacing: 0.04em;
+}
+
+.ai-insights {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-sm);
+}
+
+.ai-tip {
+  display: flex;
+  align-items: center;
+  gap: var(--space-md);
+  padding: var(--space-sm) var(--space-md);
+  background: rgba(255,255,255,0.03);
+  border-radius: var(--radius-md);
+  border: 1px solid rgba(255,255,255,0.05);
+  transition: all var(--transition-fast);
+}
+
+.ai-tip:hover {
+  background: rgba(255,255,255,0.06);
+  border-color: rgba(255,255,255,0.1);
+  transform: translateX(4px);
+}
+
+.ai-tip-icon {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 32px;
+  height: 32px;
+  border-radius: var(--radius-sm);
+  flex-shrink: 0;
+}
+
+.ai-tip[data-category="outfit"] .ai-tip-icon { color: var(--accent-warm); background: rgba(245,158,11,0.1); }
+.ai-tip[data-category="travel"] .ai-tip-icon { color: var(--accent-cool); background: rgba(6,182,212,0.1); }
+.ai-tip[data-category="commute"] .ai-tip-icon { color: var(--accent-primary); background: rgba(99,102,241,0.1); }
+.ai-tip[data-category="health"] .ai-tip-icon { color: var(--accent-danger); background: rgba(239,68,68,0.1); }
+.ai-tip[data-category="activity"] .ai-tip-icon { color: var(--accent-success); background: rgba(34,197,94,0.1); }
+
+.ai-tip-text {
+  font-size: 0.85rem;
+  color: var(--text-secondary);
+  line-height: 1.4;
+}
